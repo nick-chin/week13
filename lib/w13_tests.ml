@@ -4,9 +4,8 @@ let%test "Random Knight Path" =
   random_knight_path ();
   true
 
+
 open W13_q5
-
-
 open Week_13_Spanning
   
 let%test "Testing Spanning Tree Size" = 
@@ -23,9 +22,13 @@ let%test "Testing Spanning Tree Connectness" =
   let t = random_spanning_tree_finder g in
   match t with
   | [] -> true
-  | (u, v) :: _ ->
+  | _ ->
+  let t_graph = mk_graph (v_size g) in
   let nodes = Set.elements g.nodes in
-  List.for_all (fun n -> is_reachable g u n) nodes
+  List.iter (fun n -> add_node t_graph n) nodes;
+  List.iter (fun (a,b) -> add_edge t_graph a b) t;
+  List.iter (fun (a,b) -> add_edge t_graph b a) t;
+  List.for_all (fun n -> is_reachable t_graph (List.hd nodes) n) nodes
 
 let%test "Testing Spanning Tree Weight" = 
   let g = example_graph_undirected in
