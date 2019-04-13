@@ -1,6 +1,6 @@
 open Week_01
 open Week_06
-open Week_08
+open Week_08_HashTable
 open Week_10_ReadingFiles
 open Week_12_BST
 open Week_12_Graphs
@@ -1220,7 +1220,7 @@ let down_left g cell =
 
 let down_right g cell =
   let (x, y) = node_to_coord cell in
-  if x + 1 < 97 || y + 2 > 55
+  if x + 1 > 104 || y + 2 > 55
   then ()
   else
     let dest = coord_to_node (x + 1, y + 2) in
@@ -1234,16 +1234,16 @@ let make_chess_board _ =
     let cell = coord_to_pos @@ node_to_coord i in
     add_node g cell
   done;
-  (* for j = 0 to 63 do
-   *   up_left g j;
-   *   up_right g j;
-   *   left_up g j;
-   *   right_up g j;
-   *   left_down g j;
-   *   right_down g j;
-   *   down_left g j;
-   *   down_right g j;
-   * done; *)
+  for j = 0 to 63 do
+    up_left g j;
+    up_right g j;
+    left_up g j;
+    right_up g j;
+    left_down g j;
+    right_down g j;
+    down_left g j;
+    down_right g j;
+  done;
   g;;
 
-let board = make_chess_board ();;
+
