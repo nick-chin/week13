@@ -1,0 +1,8 @@
+(library
+ (name week13homework)
+ (public_name week13homework)
+  (wrapped false)
+  (inline_tests)                
+  (preprocess (pps ppx_inline_test ppx_expect))
+  (libraries ysc2229-part-one ysc2229-part-two core batteries)
+  (synopsis "Homework for Week 13 YSC2229"))
