@@ -28,7 +28,7 @@ let random_spanning_tree_finder g =
 
 let test_rst_size g =
   let t = random_spanning_tree_finder g in
-  List.length t = v_size example_graph_undirected - 1
+  List.length t = v_size g - 1
 
 let test_rst_cycle g =
   let tree = random_spanning_tree_finder g in
