@@ -7,6 +7,7 @@ let%test "Random Knight Path" =
 
 open W13_q5
 open Week_13_Spanning
+open Week_13_Reachability
 open Week_12_Graphs
 open LinkedGraphs
 open Week_11_UnionFind
