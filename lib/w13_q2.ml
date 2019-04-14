@@ -148,7 +148,7 @@ let print_edge_lists ls =
        Printf.printf "(%s, %s); " x y;
        printing t
   in
-  printing @@ List.rev ls
+  printing ls
   
 let random_knight_path _ =
   let b = make_chess_board () in
