@@ -158,4 +158,4 @@ let random_knight_path _ =
   let path = get_exn @@ reachable_knight b pos1 pos2 in
   Printf.printf "From %s to %s\n" pos1 pos2;
   Printf.printf "Path:\n";
-  print_edge_lists @@ get_exn path
+  print_edge_lists path
