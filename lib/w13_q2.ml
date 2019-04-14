@@ -139,11 +139,23 @@ let reachable_knight b pos1 pos2 =
 let is_reachable_knight b init final =
   reachable_knight b init final <> None
 
+let print_edge_lists ls =
+  Printf.printf "[";
+  let rec printing lst =
+    match lst with
+    | [] -> Printf.printf "]\n";
+    | (x, y) :: t ->
+       Printf.printf "(%s, %s); " x y;
+       printing t
+  in
+  printing @@ List.rev ls
+  
 let random_knight_path _ =
   let b = make_chess_board () in
   let pos1 = coord_to_pos @@ node_to_coord @@ Random.int 64 in
   let pos2 = coord_to_pos @@ node_to_coord @@ Random.int 64 in
-  let ls = [(pos1, pos2)] in
   assert (is_reachable_knight b pos1 pos2);
   let path = get_exn @@ reachable_knight b pos1 pos2 in
-  [| ls, path |]
+  Printf.printf "From %s to %s\n" pos1 pos2;
+  Printf.printf "Path:\n";
+  printing_edge_lists @@ get_exn path
