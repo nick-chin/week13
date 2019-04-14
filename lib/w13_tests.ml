@@ -6,12 +6,13 @@ let%test "Random Knight Path" =
 
 
 open W13_q5
-open Week_13_Spanning
-open Week_13_Reachability
-open Week_12_Graphs
-open LinkedGraphs
 open Week_11_UnionFind
 open UnionFind
+open Week_12_Graphs
+open LinkedGraphs
+open Week_13_Spanning
+open Week_13_Reachability
+open Week_13_Paths
   
 let%test "Testing Spanning Tree Size" = 
   let t = random_spanning_tree_finder example_graph_undirected in 
