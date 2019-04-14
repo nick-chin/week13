@@ -88,5 +88,21 @@ and the edge (u, v) are added to the tree.*)
           helper g n
         end);
     (!roots, parent_map, distance_map, tree_map)
+    
+    (* Visualise with DFS *)
+let graphviz_with_bfs g out =
+let (_, _, _, tree) = bfs g in
+let eattrib (s, d) = match get tree s with
+  | None -> ""
+  | Some p ->
+    if List.mem d p
+    then bold_edge
+    else ""
+in
+let open Week_10_ReadingFiles in
+let ag = LinkedGraphs.to_adjacency_graph g in
+let s = graphviz_string_of_graph "digraph" " -> "
+    string_of_int eattrib ag in
+write_string_to_file out s
 
 end;;
