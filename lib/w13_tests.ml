@@ -9,7 +9,7 @@ open W13_q5
 
 let%test "Testing Random Spanning Tree" =
   let g = example_graph_undirected in
-  let n = ref 5 in
+  let n = ref 100 in
   let counter = ref true in
   while !n <> 0 do
     counter := !counter && test_rst_size g && test_rst_connectness g && test_rst_connectness g && test_compare_weight_rst_mst g;
