@@ -12,10 +12,19 @@ let%test "Testing Spanning Tree Size" =
   let t = random_spanning_tree_finder example_graph_undirected in 
   List.length t = v_size example_graph_undirected - 1
 
-let%test "Testing Spanning Tree Cycle" =  
-  let g = LinkedGraphs.parse_linked_int_graph medium_graph_shape in
-  let (_, _, _, c) = GraphDFS.dfs g in
-  not c
+let%test "Testing Spanning Tree Cycle" = 
+  let g = example_graph_undirected in
+  let tree = random_spanning_tree_finder g in
+  let forest = mk_UF (v_size g) in
+  let rec check_cycle e =
+  match e with
+  | [] -> true
+  | [(u,v)] -> (find forest u) <> (find forest v)
+  | (u,v) :: t -> 
+    let su = find forest u in
+    let sv = find forest v in
+    if su <> sv then (union forest u v; check_cycle t) else false in
+check_cycle tree
 
 let%test "Testing Spanning Tree Connectness" = 
   let g = example_graph_undirected in
