@@ -6,6 +6,7 @@ let%test "Random Knight Path" =
 
 
 open W13_q5
+open Week_13_Spanning
 
 let%test "Testing Random Spanning Tree" =
   let g = example_graph_undirected in
