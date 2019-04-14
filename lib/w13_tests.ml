@@ -10,6 +10,7 @@ open Week_13_Spanning
 open Week_12_Graphs
 open LinkedGraphs
 open Week_11_UnionFind
+open UnionFind
   
 let%test "Testing Spanning Tree Size" = 
   let t = random_spanning_tree_finder example_graph_undirected in 
