@@ -1,3 +1,32 @@
+open W13_q1
+
+let g = gen_random_graph 50
+
+let test_bfs g =
+  let all_nodes = LinkedGraphs.get_nodes g in
+  let (bfs_roots, _, _, _) = GraphBFS.bfs g in
+
+  (* Any node BFS-reachable from a root r is reachable from r *)
+  let fact1 =
+    List.for_all bfs_roots ~f:(fun u ->
+        List.for_all all_nodes ~f:(fun v ->
+            if GraphBFS.is_reachable_via_bfs g u v
+            then is_reachable g u v
+            else true))
+  in
+
+  (* Any node is reachable from some root r *)
+  let fact2 =
+    List.for_all all_nodes ~f:(fun u ->
+        List.exists dfs_roots
+          ~f:(fun r -> GraphBFS.is_reachable_via_bfs g r u)) in
+
+  fact1 && fact2
+  
+  
+
+
+
 open W13_q2
 
 let%test "Random Knight Path" =
