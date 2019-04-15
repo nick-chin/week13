@@ -17,9 +17,6 @@ module GraphBFS = struct
 
   let  bfs g =
 
-
-
-
     let color_map = mk_new_table (v_size g) in
     let parent_map = mk_new_table (v_size g) in
     let tree_map = mk_new_table (v_size g) in
@@ -106,3 +103,56 @@ let s = graphviz_string_of_graph "digraph" " -> "
 write_string_to_file out s
 
 end;;
+
+
+
+(*Procedure to generate random graph*)
+
+
+let gen_nodes n = let arr = Array.make n 0 in
+for i = 0 to n - 1 do
+arr.(i) <- i
+done;
+arr;;
+
+
+let gen_edges n = 
+  let size = Random.int (n* (n -1)) in
+  let max = n - 1 in
+  let gen_edges_helper size_list max_num  =
+    let arr = Array.make size_list (0,0) in
+    for i = 0 to size_list - 1 do
+      arr.(i) <-  (Random.int  max_num, Random.int  max_num)
+    done;
+    arr;
+  in gen_edges_helper size max;;
+
+
+let addnodes (lst: string array) g = let len = Array.length lst in
+   for i = 0 to len -1  do
+   add_node g lst.(i);
+   done;;
+
+
+let addedges (lst: (int * int) array) g = let len = Array.length lst in
+     for i = 0 to len -1  do
+     add_edge g (fst (lst.(i))) (snd (lst.(i)));
+     done;;
+
+
+let gen_random_graph n =
+  let g = mk_graph in
+  let nodes =  gen_nodes n in
+  let edges = gen_edges n in
+  addnodes nodes;
+  addedges edges;
+  g;;
+  
+  
+  (*Tests*)
+  
+  open GraphBFS
+
+
+
+
