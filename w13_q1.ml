@@ -149,9 +149,22 @@ let gen_random_graph n =
   g;;
   
   
-  (*Tests*)
+  (*Helper functions for Tests*)
   
   open GraphBFS
+  
+  let is_reachable_via_bfs g init final =
+  let (roots, _, _, tree) = bfs g in
+  let rec walk n =
+    if n = final then true
+    else
+      get tree n |>
+      Week_01.get_exn |>
+      List.exists (fun v -> walk v)
+  in
+  if List.mem init roots
+  then walk init
+  else false
 
 
 
