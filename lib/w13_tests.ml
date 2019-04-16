@@ -3,7 +3,7 @@ open W13_q1
 let g = gen_random_graph 50
 
 let test_bfs g =
-  let all_nodes = LinkedGraphs.get_nodes g in
+  let all_nodes = get_nodes g in
   let (bfs_roots, _, _, _) = GraphBFS.bfs g in
 
   (* Any node BFS-reachable from a root r is reachable from r *)
