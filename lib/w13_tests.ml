@@ -1,5 +1,9 @@
 open W13_q1
 
+let%test "Test for DFS" =
+  test_bfs (gen_random_graph 50)
+  
+
 
 
 open W13_q2
