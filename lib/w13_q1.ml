@@ -165,6 +165,27 @@ let gen_random_graph n =
   if List.mem init roots
   then walk init
   else false
+  
+  let test_bfs g =
+  let all_nodes = LinkedGraphs.get_nodes g in
+  let (bfs_roots, _, _, _) = GraphBFS.bfs g in
+
+  (* Any node BFS-reachable from a root r is reachable from r *)
+  let fact1 =
+    List.for_all (fun u ->
+        (List.for_all  (fun v ->
+            if is_reachable_via_bfs g u v
+            then is_reachable g u v
+            else true) all_nodes)) bfs_roots
+  in
+
+  (* Any node is reachable from some root r *)
+  let fact2 =
+    List.for_all (fun u ->
+        (List.exists (fun r -> is_reachable_via_bfs g r u) bfs_roots))
+          all_nodes in
+
+  fact1 && fact2;;
 
 
 
