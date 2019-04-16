@@ -130,7 +130,7 @@ let gen_edges n =
 
 let addnodes (lst: string array) g = let len = Array.length lst in
    for i = 0 to len -1  do
-   add_node g lst.(i);
+   add_node g string_of_int(lst.(i));
    done;;
 
 
