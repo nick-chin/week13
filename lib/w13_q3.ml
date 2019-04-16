@@ -23,13 +23,13 @@ let rec get_path_weight g path = match path with
     w + get_path_weight g t
   | _ -> 0
 
-(* Relax the distance between u and v in increasing order *)
+(* relax edge (u, v) in increasing order *)
 let relax_increasing dist_table prev_tree w u v =
   let open Distance in
   (* distance from s to v through u *)
   let vud = dist dist_table u + (Finite (w u v)) in
   let pred_u = get prev_tree u in
-  (* update if and only if going from s to v through u is shorter and the distance from u to v is longer than the current incoming edge of u *)
+  (* update if and only if going from s to v through u is shorter and the distance from u to v is longer than the incoming edge to u in the current path *)
   if (dist dist_table v > vud) && ((pred_u <> None && Finite (w u v) > Finite (w (get_exn pred_u) u)) || (pred_u = None))
   then
     begin
@@ -37,12 +37,13 @@ let relax_increasing dist_table prev_tree w u v =
       NodeTable.insert prev_tree v u
     end
 
+(* relax edge (u, v) in decreasing order *)
 let relax_decreasing dist_table prev_tree w u v =
   let open Distance in
   (* distance from s to v through u *)
   let vud = dist dist_table u + (Finite (w u v)) in
   let pred_u = get prev_tree u in
-  (* update if and only if going from s to v through u is shorter and the distance from u to v is shorter than the current incoming edge of u *)
+  (* update if and only if going from s to v through u is shorter and the distance from u to v is shorter than the incoming edge to u in the current path *)
   if (dist dist_table v > vud) && ((pred_u <> None && Finite (w u v) < Finite (w (get_exn pred_u) u)) || (pred_u = None))
   then
     begin
@@ -116,7 +117,7 @@ monotonic_shortest_path g 0 3
 monotonic_shortest_path g 0 4
 *)
 
-(* reachability *)
+(* determine if final is reachable from init via an increasing path *)
 let increasing_reachable g init final =
   let w = get_linked_edge_label g in
   let rec walk path visited n = 
@@ -151,6 +152,7 @@ increasing_reachable g 0 3
 increasing_reachable g 0 4
 *)
 
+(* determine if final is reachable from init via a decreasing path *)
 let decreasing_reachable g init final =
   let w = get_linked_edge_label g in
   let rec walk path visited n = 
@@ -185,6 +187,7 @@ decreasing_reachable g 0 3
 decreasing_reachable g 0 4
 *)
 
+(* determine if final is reachable from init via a monotonic path *)
 let monotonically_reachable g init final =
   let increasing = increasing_reachable g init final in
   let decreasing = decreasing_reachable g init final in
@@ -203,7 +206,10 @@ monotonically_reachable g 0 4
 let is_monotonically_reachable g init final = 
   monotonically_reachable g init final <> None
 
-(* test *)
+(*****************************************)
+(*                Tests                  *)
+(*****************************************)
+
 (* path is monotonic*)
 let test_path_monotonic g s t =
   match monotonic_shortest_path g s t with
@@ -242,14 +248,13 @@ let test_that_is_path_graph g s t =
     let all_edges = elements g.edges in
     List.for_all (fun e -> List.mem e all_edges) path
 
-(* exists for any monotonically reachable node *)
-
+(* path exists for any monotonically reachable node *)
 let test_monotonically_reachable_hence_has_path g s t =
   if is_monotonically_reachable g s t
   then monotonic_shortest_path g s t <> None
   else true
 
-(* test shortest *)
+(* path is always shorter *)
 let test_shortest_is_shorter g s t =
   match monotonically_reachable g s t with
   | None -> true
@@ -261,8 +266,7 @@ let test_shortest_is_shorter g s t =
       let w2 = get_path_weight g p2 in
       w2 <= w1
 
-(*  Main testing function  *)
-
+(*  main testing function  *)
 let test_monotonic_shortest_path g =
   let all_nodes = get_nodes g in
   List.iter (
@@ -279,6 +283,7 @@ let test_monotonic_shortest_path g =
     ) all_nodes;
   true
 
+(* tester *)
 let tester_monotonic _ =
   test_monotonic_shortest_path example_graph_bf &&
     test_monotonic_shortest_path example_graph_dijkstra
