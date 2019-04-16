@@ -109,9 +109,9 @@ end;;
 (*Procedure to generate random graph*)
 
 
-let gen_nodes n = let arr = Array.make n 0 in
+let gen_nodes n = let arr = Array.make n "0" in
 for i = 0 to n - 1 do
-arr.(i) <- i
+arr.(i) <- string_of_int(i)
 done;
 arr;;
 
@@ -130,7 +130,7 @@ let gen_edges n =
 
 let addnodes (lst: string array) g = let len = Array.length lst in
    for i = 0 to len -1  do
-   add_node g (string_of_int(lst.(i)));
+   add_node g lst.(i);
    done;;
 
 
@@ -141,11 +141,11 @@ let addedges (lst: (int * int) array) g = let len = Array.length lst in
 
 
 let gen_random_graph n =
-  let g = mk_graph in
+  let g = mk_graph() in
   let nodes =  gen_nodes n in
   let edges = gen_edges n in
-  addnodes nodes;
-  addedges edges;
+  addnodes nodes g;
+  addedges edges g;
   g;;
   
   
