@@ -21,7 +21,7 @@ let rec get_path_weight g path = match path with
   | (u, v) :: t -> 
     let w = get_linked_edge_label g u v in 
     w + get_path_weight g t
-  | _ -> 0;;
+  | _ -> 0
 
 (* Relax the distance between u and v in increasing order *)
 let relax_increasing dist_table prev_tree w u v =
@@ -34,8 +34,8 @@ let relax_increasing dist_table prev_tree w u v =
   then
     begin
       NodeTable.insert dist_table v vud;
-      NodeTable.insert prev_tree v u;
-    end;;
+      NodeTable.insert prev_tree v u
+    end
 
 let relax_decreasing dist_table prev_tree w u v =
   let open Distance in
@@ -47,8 +47,8 @@ let relax_decreasing dist_table prev_tree w u v =
   then
     begin
       NodeTable.insert dist_table v vud;
-      NodeTable.insert prev_tree v u;
-    end;;
+      NodeTable.insert prev_tree v u
+    end
 
 (* find increasing shortest path from node s to every other node in g *)
 let increasing_shortest_path g s =
@@ -66,7 +66,7 @@ let increasing_shortest_path g s =
       then false
       else check_neg_cycles t
   in
-  ((p, d), check_neg_cycles all_edges);;
+  ((p, d), check_neg_cycles all_edges)
 
 (* find decreasing shortest path from node s to every other node in g *)
 let decreasing_shortest_path g s =
@@ -84,7 +84,7 @@ let decreasing_shortest_path g s =
       then false
       else check_neg_cycles t
   in
-  ((p, d), check_neg_cycles all_edges);;
+  ((p, d), check_neg_cycles all_edges)
 
 (* get monotonic shortest path from s to t in g *)
 let monotonic_shortest_path g s t =
@@ -107,13 +107,13 @@ let monotonic_shortest_path g s t =
      then Some path2
      else if path1 = path2
      then Some path1
-     else None;;
+     else None
 (*
-let g = example_graph_bf;;
-monotonic_shortest_path g 0 1;;
-monotonic_shortest_path g 0 2;;
-monotonic_shortest_path g 0 3;;
-monotonic_shortest_path g 0 4;;
+let g = example_graph_bf
+monotonic_shortest_path g 0 1
+monotonic_shortest_path g 0 2
+monotonic_shortest_path g 0 3
+monotonic_shortest_path g 0 4
 *)
 
 (* reachability *)
@@ -142,13 +142,13 @@ let increasing_reachable g init final =
   in
   match walk [] [] init with
   | Some p -> Some (List.rev p)
-  | _ -> None;;
+  | _ -> None
 
 (*
-increasing_reachable g 0 1;;
-increasing_reachable g 0 2;;
-increasing_reachable g 0 3;;
-increasing_reachable g 0 4;;
+increasing_reachable g 0 1
+increasing_reachable g 0 2
+increasing_reachable g 0 3
+increasing_reachable g 0 4
 *)
 
 let decreasing_reachable g init final =
@@ -176,13 +176,13 @@ let decreasing_reachable g init final =
   in
   match walk [] [] init with
   | Some p -> Some (List.rev p)
-  | _ -> None;;
+  | _ -> None
 
 (*
-decreasing_reachable g 0 1;;
-decreasing_reachable g 0 2;;
-decreasing_reachable g 0 3;;
-decreasing_reachable g 0 4;;
+decreasing_reachable g 0 1
+decreasing_reachable g 0 2
+decreasing_reachable g 0 3
+decreasing_reachable g 0 4
 *)
 
 let monotonically_reachable g init final =
@@ -192,16 +192,16 @@ let monotonically_reachable g init final =
   | (None, None) -> None
   | (Some path, None) -> Some path
   | (None, Some path) -> Some path
-  | (Some path1, _) -> Some path1;;
+  | (Some path1, _) -> Some path1
 (*
-monotonically_reachable g 0 1;;
-monotonically_reachable g 0 2;;
-monotonically_reachable g 0 3;;
-monotonically_reachable g 0 4;;
+monotonically_reachable g 0 1
+monotonically_reachable g 0 2
+monotonically_reachable g 0 3
+monotonically_reachable g 0 4
 *)
 
 let is_monotonically_reachable g init final = 
-  monotonically_reachable g init final <> None;;
+  monotonically_reachable g init final <> None
 
 (* test *)
 (* path is monotonic*)
@@ -219,7 +219,7 @@ let test_path_monotonic g s t =
      in
      let mono = walk weights [] in
      List.for_all (fun x -> x > 0) mono ||
-       List.for_all (fun x -> x < 0) mono;;
+       List.for_all (fun x -> x < 0) mono
 
 (* path is connected *)
 let test_path_connected g s t =
@@ -232,7 +232,7 @@ let test_path_connected g s t =
           v = x && walk ((x, y) :: t)
        | _ -> true
      in
-     walk path;;
+     walk path
 
 (* all edges in the path are in the graph *)
 let test_that_is_path_graph g s t =
@@ -240,14 +240,14 @@ let test_that_is_path_graph g s t =
   | None -> true
   | Some path ->
     let all_edges = elements g.edges in
-    List.for_all (fun e -> List.mem e all_edges) path;;
+    List.for_all (fun e -> List.mem e all_edges) path
 
 (* exists for any monotonically reachable node *)
 
 let test_monotonically_reachable_hence_has_path g s t =
   if is_monotonically_reachable g s t
   then monotonic_shortest_path g s t <> None
-  else true;;
+  else true
 
 (* test shortest *)
 let test_shortest_is_shorter g s t =
@@ -259,7 +259,7 @@ let test_shortest_is_shorter g s t =
     | Some p2 ->
       let w1 = get_path_weight g p1 in
       let w2 = get_path_weight g p2 in
-      w2 <= w1;;
+      w2 <= w1
 
 (*  Main testing function  *)
 
@@ -277,10 +277,10 @@ let test_monotonic_shortest_path g =
          )
       ) all_nodes
     ) all_nodes;
-  true;;
+  true
 
-let g = example_graph_bf;;
-let tester_monotonic _ = test_monotonic_shortest_path g;;
+let g = example_graph_bf
+let tester_monotonic _ = test_monotonic_shortest_path g
 
 (*
 open W13_q3
