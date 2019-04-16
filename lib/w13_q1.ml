@@ -158,7 +158,7 @@ let gen_random_graph n =
   let rec walk n =
     if n = final then true
     else
-      get tree n |>
+      NodeTable.get tree n |>
       Week_01.get_exn |>
       List.exists (fun v -> walk v)
   in
