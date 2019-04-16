@@ -117,7 +117,7 @@ arr
 
 
 let gen_edges n = 
-  let size = Random.int (n* (n -1)) in
+  let size = Random.int (n* n) in
   let max = n - 1 in
   let gen_edges_helper size_list max_num  =
     let arr = Array.make size_list (0,0) in
