@@ -33,8 +33,8 @@ let relax_increasing dist_table prev_tree w u v =
   if (dist dist_table v > vud) && ((pred_u <> None && Finite (w u v) > Finite (w (get_exn pred_u) u)) || (pred_u = None))
   then
     begin
-      insert dist_table v vud;
-      insert prev_tree v u;
+      NodeTable.insert dist_table v vud;
+      NodeTable.insert prev_tree v u;
     end;;
 
 let relax_decreasing dist_table prev_tree w u v =
@@ -46,8 +46,8 @@ let relax_decreasing dist_table prev_tree w u v =
   if (dist dist_table v > vud) && ((pred_u <> None && Finite (w u v) < Finite (w (get_exn pred_u) u)) || (pred_u = None))
   then
     begin
-      insert dist_table v vud;
-      insert prev_tree v u;
+      NodeTable.insert dist_table v vud;
+      NodeTable.insert prev_tree v u;
     end;;
 
 (* find increasing shortest path from node s to every other node in g *)
