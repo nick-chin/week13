@@ -166,7 +166,17 @@ let gen_random_graph n =
   then walk init
   else false
   
-  let test_bfs g =
+  
+let equ list1 list2 = 
+  let rec as_mem l1 l2 = 
+  match l1 with
+  | [] -> true
+  | h :: t -> List.mem h l2 && as_mem t l2
+  in
+  List.length list1 = List.length list2 && as_mem list1 list2
+
+
+let test_bfs g =
   let all_nodes = LinkedGraphs.get_nodes g in
   let (bfs_roots, _, _, _) = GraphBFS.bfs g in
 
@@ -184,8 +194,13 @@ let gen_random_graph n =
     List.for_all (fun u ->
         (List.exists (fun r -> is_reachable_via_bfs g r u) bfs_roots))
           all_nodes in
+          
+   (* Roots in both DFS search and BFS search of the trees we obtain are the same*)      
+   let (dfs_roots, _, _, _) = GraphDFS.dfs g in
+   let fact3 =  equ bfs_roots  dfs_roots in
 
-  fact1 && fact2;;
+  fact1 && fact2 && fact3
+
 
 
 
