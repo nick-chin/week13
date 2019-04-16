@@ -279,8 +279,9 @@ let test_monotonic_shortest_path g =
     ) all_nodes;
   true
 
-let g = example_graph_bf
-let tester_monotonic _ = test_monotonic_shortest_path g
+let tester_monotonic _ =
+  test_monotonic_shortest_path example_graph_bf &&
+    test_monotonic_shortest_path example_graph_dijkstra
 
 (*
 open W13_q3
