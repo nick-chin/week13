@@ -34,7 +34,7 @@ let relax_increasing dist_table prev_tree w u v =
   then
     begin
       insert dist_table v vud;
-      insert prev_tree v u
+      insert prev_tree v u;
     end;;
 
 let relax_decreasing dist_table prev_tree w u v =
@@ -47,7 +47,7 @@ let relax_decreasing dist_table prev_tree w u v =
   then
     begin
       insert dist_table v vud;
-      insert prev_tree v u
+      insert prev_tree v u;
     end;;
 
 (* find increasing shortest path from node s to every other node in g *)
