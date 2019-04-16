@@ -166,7 +166,5 @@ let gen_random_graph n =
   then walk init
   else false
 
-let g = gen_random_graph 50
-
 
 
