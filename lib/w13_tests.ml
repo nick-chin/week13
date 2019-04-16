@@ -25,3 +25,6 @@ let%test "Testing Random Spanning Tree" =
     n := !n - 1;
   done;
   !counter
+
+open W13_q3
+let%test "monotonic_shortest_path" = tester_monotonic ()
