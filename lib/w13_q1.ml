@@ -198,7 +198,7 @@ let test_bfs g =
         (List.exists (fun r -> is_reachable_via_bfs g r u) bfs_roots))
           all_nodes in
           
-   (* Roots in both DFS search and BFS search of the trees we obtain are the same*)      
+   (* Roots of the trees we obtain from DFS search and BFS search are the same*)      
    let (dfs_roots, _, _, _) = GraphDFS.dfs g in
    let fact3 =  equ bfs_roots  dfs_roots in
 
