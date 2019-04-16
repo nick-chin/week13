@@ -54,7 +54,7 @@ module GraphBFS = struct
 
 (*Perform action on all adjacent vertices*)
 
-(*Whenever a white vertex is found while scanning for u, the vertex v
+(*Whenever a white vertex is found while scanning the adjacent vertices to u, the vertex v
 and the edge (u, v) are added to the tree.*)
     get_succ g u |> List.iter (fun v ->
         let v_color = get_exn @@ get color_map v in
@@ -75,7 +75,7 @@ and the edge (u, v) are added to the tree.*)
    done in
 
 
-(* We iterate through all the nodes with white color*)
+(* We iterate through all the nodes with white color after the queue gets empty*)
 
       all_nodes |> List.iter (fun n ->
         if get_exn @@ get color_map n = White
@@ -86,7 +86,7 @@ and the edge (u, v) are added to the tree.*)
         end);
     (!roots, parent_map, distance_map, tree_map)
     
-    (* Visualise with DFS *)
+    (* Visualise with BFS *)
 let graphviz_with_bfs g out =
 let (_, _, _, tree) = bfs g in
 let eattrib (s, d) = match get tree s with
@@ -102,7 +102,7 @@ let s = graphviz_string_of_graph "digraph" " -> "
     string_of_int eattrib ag in
 write_string_to_file out s
 
-end;;
+end
 
 
 
@@ -113,7 +113,7 @@ let gen_nodes n = let arr = Array.make n "0" in
 for i = 0 to n - 1 do
 arr.(i) <- string_of_int(i)
 done;
-arr;;
+arr
 
 
 let gen_edges n = 
@@ -125,19 +125,19 @@ let gen_edges n =
       arr.(i) <-  (Random.int  max_num, Random.int  max_num)
     done;
     arr;
-  in gen_edges_helper size max;;
+  in gen_edges_helper size max
 
 
 let addnodes (lst: string array) g = let len = Array.length lst in
    for i = 0 to len -1  do
    add_node g lst.(i);
-   done;;
+   done
 
 
 let addedges (lst: (int * int) array) g = let len = Array.length lst in
      for i = 0 to len -1  do
      add_edge g (fst (lst.(i))) (snd (lst.(i)));
-     done;;
+     done
 
 
 let gen_random_graph n =
@@ -146,7 +146,7 @@ let gen_random_graph n =
   let edges = gen_edges n in
   addnodes nodes g;
   addedges edges g;
-  g;;
+  g
   
   
   (*Helper functions for Tests*)
@@ -174,6 +174,9 @@ let equ list1 list2 =
   | h :: t -> List.mem h l2 && as_mem t l2
   in
   List.length list1 = List.length list2 && as_mem list1 list2
+  
+  
+  (*Test for bfs*)
 
 
 let test_bfs g =
