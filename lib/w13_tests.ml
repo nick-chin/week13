@@ -28,4 +28,3 @@ let%test "Testing Random Spanning Tree" =
 
 open W13_q3
 let%test "monotonic_shortest_path" = tester_monotonic ()
-let%test "monotonic_shortest_path_random" = tester_monotonic_random ()
