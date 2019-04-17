@@ -23,6 +23,18 @@ let rec get_path_weight g path = match path with
     w + get_path_weight g t
   | _ -> 0
 
+(* sort a list by another list *)
+let sort_l1_by_l2 l1 l2 =
+  let zipped = list_zip l1 l2 in
+  let comp x y =
+    if (snd x < snd y) then (-1)
+    else if (snd x > snd y) then 1
+    else 0
+  in
+  let sorted = List.sort comp zipped in
+  let l1_sorted = List.map (fun e -> fst e) sorted in
+  l1_sorted
+
 (* find increasing shortest path from node init to node final *)
 let increasing_shortest_path g init final =
   let w = get_linked_edge_label g in
